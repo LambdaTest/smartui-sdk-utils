@@ -1,15 +1,17 @@
-package com.github.lambdatest;
+package com.github.lambdatest.utils;
 
 import java.util.logging.Logger;
 import org.json.JSONObject;
 
-public class SmartUIUtils {
+import com.github.lambdatest.constants.Constants;
+
+public class SmartUIUtil {
     private final HttpClientUtil httpClient;
     private Logger log;
 
-    public SmartUIUtils() {
+    public SmartUIUtil() {
         this.httpClient = new HttpClientUtil();
-        this.log = LoggerUtil.createLogger(SmartUIUtils.class.getName());
+        this.log = LoggerUtil.createLogger(SmartUIUtil.class.getName());
     }
 
     public boolean isSmartUIRunning() {
@@ -27,7 +29,7 @@ public class SmartUIUtils {
             return httpClient.fetchDOMSerializer();
         } catch (Exception e) {
             log.fine(e.getMessage());
-            throw new Exception("fetch DOMSerializer failed", e);
+            throw new Exception(Constants.Errors.FETCH_DOM_FAILED, e);
         }
     }
 
@@ -42,13 +44,17 @@ public class SmartUIUtils {
         data.put("testType", testType);
 
         String jsonData = data.toString();
-
+        
         try {
             return httpClient.postSnapshot(jsonData);
         } catch (Exception e) {
             log.fine(e.getMessage());
-            throw new Exception("Post snapshot failed", e);
+            throw new Exception(Constants.Errors.POST_SNAPSHOT_FAILED, e);
         }
+    }
+
+    public static String getSmartUIServerAddress() {
+        return System.getenv().getOrDefault(Constants.SMARTUI_SERVER_ADDRESS, Constants.LOCAL_SERVER_HOST);
     }
 
 

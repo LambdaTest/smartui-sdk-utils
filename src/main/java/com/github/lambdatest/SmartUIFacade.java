@@ -1,15 +1,16 @@
 package com.github.lambdatest;
 
 import java.util.logging.Logger;
-
 import org.openqa.selenium.WebDriver;
+import com.github.lambdatest.utils.LoggerUtil;
+import com.github.lambdatest.utils.SmartUIUtil;
 
 public class SmartUIFacade {
-    private final SmartUIUtils smartUIUtils;
+    private final SmartUIUtil smartUIUtils;
     private final Logger log;
 
     public SmartUIFacade() {
-        this.smartUIUtils = new SmartUIUtils();
+        this.smartUIUtils = new SmartUIUtil();
         this.log = LoggerUtil.createLogger(SmartUIFacade.class.getName());
     }
 

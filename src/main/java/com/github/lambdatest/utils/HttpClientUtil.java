@@ -1,4 +1,4 @@
-package com.github.lambdatest;
+package com.github.lambdatest.utils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -10,7 +10,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-
+import com.github.lambdatest.constants.Constants;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
@@ -22,9 +22,9 @@ public class HttpClientUtil {
     }
 
     public String request(String url, String method, String data) throws IOException {
-        if ("POST".equalsIgnoreCase(method)) {
+        if (Constants.RequestMethods.POST.equalsIgnoreCase(method)) {
             return post(url, data);
-        } else if ("GET".equalsIgnoreCase(method)) {
+        } else if (Constants.RequestMethods.GET.equalsIgnoreCase(method)) {
             return get(url);
         } else {
             throw new IllegalArgumentException("Unsupported HTTP method: " + method);
@@ -61,15 +61,15 @@ public class HttpClientUtil {
 
 
     public String isSmartUIRunning() throws IOException {
-        return request(Utils.getSmartUIServerAddress() + "/healthcheck", "GET", null);
+        return request(SmartUIUtil.getSmartUIServerAddress() + Constants.SmartUIRoutes.SMARTUI_HEALTHCHECK_ROUTE, Constants.RequestMethods.GET, null);
     }
 
     public String fetchDOMSerializer() throws IOException {
-        return request(Utils.getSmartUIServerAddress() + "/domserializer", "GET", null);
+        return request(SmartUIUtil.getSmartUIServerAddress() + Constants.SmartUIRoutes.SMARTUI_DOMSERIALIZER_ROUTE, Constants.RequestMethods.GET, null);
     }
 
     public String postSnapshot(String data) throws IOException {
-        return request(Utils.getSmartUIServerAddress() + "/snapshot", "POST", data);
+        return request(SmartUIUtil.getSmartUIServerAddress() + Constants.SmartUIRoutes.SMARTUI_SNPASHOT_ROUTE, Constants.RequestMethods.POST, data);
     }
 
 

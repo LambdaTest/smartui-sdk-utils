@@ -17,3 +17,14 @@ settings.xml
 .idea/
 .settings
 /target/
+/.gradle/
+/build/
+/target/
+*.css
+*.gif
+*.xml
+*.project
+.DS_Store
+.classpath
+bin/
+work/
