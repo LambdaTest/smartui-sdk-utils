@@ -16,7 +16,7 @@ public class LoggerUtil {
         Logger logger = Logger.getLogger(logContext);
         logger.setLevel(getLogLevel());
         logger.setUseParentHandlers(false);
-        
+
         ConsoleHandler handler = new ConsoleHandler();
         handler.setFormatter(new Formatter() {
             @Override

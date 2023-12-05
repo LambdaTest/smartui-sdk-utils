@@ -8,8 +8,8 @@ public class SmartUIUtils {
     private Logger log;
 
     public SmartUIUtils() {
-       this.httpClient = new HttpClientUtil();
-       this.log = LoggerUtil.createLogger(SmartUIUtils.class.getName());
+        this.httpClient = new HttpClientUtil();
+        this.log = LoggerUtil.createLogger(SmartUIUtils.class.getName());
     }
 
     public boolean isSmartUIRunning() {
@@ -52,5 +52,5 @@ public class SmartUIUtils {
     }
 
 
-    
+
 }

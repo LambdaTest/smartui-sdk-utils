@@ -41,23 +41,23 @@ public class HttpClientUtil {
     }
 
     private String post(String url, String data) throws IOException {
-    HttpPost request = new HttpPost(url);
-    request.setEntity(new StringEntity(data, StandardCharsets.UTF_8));
-    request.setHeader("Content-type", "application/json");
+        HttpPost request = new HttpPost(url);
+        request.setEntity(new StringEntity(data, StandardCharsets.UTF_8));
+        request.setHeader("Content-type", "application/json");
 
-    try (CloseableHttpResponse response = httpClient.execute(request)) {
-        checkResponseStatus(response);
-        HttpEntity entity = response.getEntity();
-        return entity != null ? EntityUtils.toString(entity) : null;
+        try (CloseableHttpResponse response = httpClient.execute(request)) {
+            checkResponseStatus(response);
+            HttpEntity entity = response.getEntity();
+            return entity != null ? EntityUtils.toString(entity) : null;
+        }
     }
-}
 
     private void checkResponseStatus(HttpResponse response) throws IOException {
-            int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode != HttpStatus.SC_OK) {
-                throw new IOException("Request failed with status code: " + statusCode + " and response: " + response);
-            }
+        int statusCode = response.getStatusLine().getStatusCode();
+        if (statusCode != HttpStatus.SC_OK) {
+            throw new IOException("Request failed with status code: " + statusCode + " and response: " + response);
         }
+    }
 
 
     public String isSmartUIRunning() throws IOException {
