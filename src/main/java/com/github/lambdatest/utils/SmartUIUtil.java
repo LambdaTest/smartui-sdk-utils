@@ -2,8 +2,10 @@ package com.github.lambdatest.utils;
 
 import java.util.logging.Logger;
 import org.json.JSONObject;
-
+import com.google.gson.Gson;
 import com.github.lambdatest.constants.Constants;
+import com.github.lambdatest.models.Snapshot;
+import com.github.lambdatest.models.SnapshotData;
 
 public class SmartUIUtil {
     private final HttpClientUtil httpClient;
@@ -34,16 +36,19 @@ public class SmartUIUtil {
     }
 
     public String postSnapshot(Object snapshotDOM, String snapshotName, String testType) throws Exception {
-        // Constructing JSON using JSONObject
-        JSONObject snapshot = new JSONObject();
-        snapshot.put("dom", snapshotDOM);
-        snapshot.put("name", snapshotName);
 
-        JSONObject data = new JSONObject();
-        data.put("snapshot", snapshot);
-        data.put("testType", testType);
+       // Create Snapshot and SnapshotData objects
+        Snapshot snapshot = new Snapshot();
+        snapshot.setDom(snapshotDOM);
+        snapshot.setName(snapshotName);
 
-        String jsonData = data.toString();
+        SnapshotData data = new SnapshotData();
+        data.setSnapshot(snapshot);
+        data.setTestType(testType);
+
+        // Serialize to JSON using Gson
+        Gson gson = new Gson();
+        String jsonData = gson.toJson(data);
         
         try {
             return httpClient.postSnapshot(jsonData);
@@ -56,7 +61,4 @@ public class SmartUIUtil {
     public static String getSmartUIServerAddress() {
         return System.getenv().getOrDefault(Constants.SMARTUI_SERVER_ADDRESS, Constants.LOCAL_SERVER_HOST);
     }
-
-
-
 }
