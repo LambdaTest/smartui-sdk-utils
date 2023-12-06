@@ -4,9 +4,9 @@ import org.openqa.selenium.WebDriver;
 import com.github.lambdatest.utils.LoggerUtil;
 import com.github.lambdatest.utils.SmartUIUtil;
 import com.github.lambdatest.constants.Constants;
-import com.github.lambdatest.models.DOMData;
 import com.github.lambdatest.models.ResponseData;
 import org.openqa.selenium.JavascriptExecutor;
+import com.google.gson.Gson;
 import java.util.Map;
 import java.util.logging.Logger;
 import org.json.JSONObject;
@@ -20,6 +20,8 @@ public class SmartUISnapshot {
             throw new IllegalArgumentException(Constants.Errors.SNAPSHOT_NAME_NULL);
         }
         Logger log = LoggerUtil.createLogger(SmartUISnapshot.class.getName());
+
+        Gson gson = new Gson();
 
         SmartUIUtil smartUIUtils = new SmartUIUtil();
 
@@ -36,28 +38,16 @@ public class SmartUISnapshot {
                 if (response == null || response.isEmpty()) {
                     throw new IllegalStateException(Constants.Errors.EMPTY_RESPONSE_DOMSERIALIZER);
                 }
-   
-                JSONObject resp = new JSONObject(response);
-                if (!resp.has("data")) {
-                    throw new IllegalStateException(Constants.Errors.EMPTY_DATA_FIELD);
-                }
-                
-                JSONObject dataObj = resp.getJSONObject("data");
-                if (dataObj == null || !dataObj.has("dom")) {
-                    throw new IllegalStateException(Constants.Errors.NULL_DATA_OBJECT);
+
+                // Parse the response JSON into ResponseData object
+                ResponseData responseData = gson.fromJson(response, ResponseData.class);
+
+                // Validate the responseData and extract DOM string
+                if (responseData == null || responseData.getData() == null || responseData.getData().getDom() == null || responseData.getData().getDom().isEmpty()) {
+                    throw new IllegalStateException(Constants.Errors.INVALID_RESPONSE_DATA);
                 }
 
-                // Extract the DOM string from the JSON object
-                String domString = dataObj.getString("dom");
-                if (domString == null || domString.isEmpty()) {
-                    throw new IllegalStateException(Constants.Errors.NULL_DOM_STRING);
-                }
-
-                DOMData domData = new DOMData();
-                domData.setDom(domString);
-
-                ResponseData responseData = new ResponseData();
-                responseData.setData(domData);
+                String domString = responseData.getData().getDom();
 
                 // Execute script with the fetched DOM string
                 ((JavascriptExecutor) driver).executeScript(domString);
