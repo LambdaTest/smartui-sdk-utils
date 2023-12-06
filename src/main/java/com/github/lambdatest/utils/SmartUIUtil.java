@@ -19,7 +19,7 @@ public class SmartUIUtil {
             httpClient.isSmartUIRunning();
             return true;
         } catch (Exception e) {
-            log.fine(e.getMessage());
+            log.severe(e.getMessage());
             return false;
         }
     }
@@ -28,7 +28,7 @@ public class SmartUIUtil {
         try {
             return httpClient.fetchDOMSerializer();
         } catch (Exception e) {
-            log.fine(e.getMessage());
+            log.severe(e.getMessage());
             throw new Exception(Constants.Errors.FETCH_DOM_FAILED, e);
         }
     }
@@ -48,7 +48,7 @@ public class SmartUIUtil {
         try {
             return httpClient.postSnapshot(jsonData);
         } catch (Exception e) {
-            log.fine(e.getMessage());
+            log.severe(e.getMessage());
             throw new Exception(Constants.Errors.POST_SNAPSHOT_FAILED, e);
         }
     }
