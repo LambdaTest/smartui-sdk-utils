@@ -1,10 +1,10 @@
-package com.github.lambdatest;
+package io.github.lambdatest;
 
 import org.openqa.selenium.WebDriver;
-import com.github.lambdatest.utils.LoggerUtil;
-import com.github.lambdatest.utils.SmartUIUtil;
-import com.github.lambdatest.constants.Constants;
-import com.github.lambdatest.models.ResponseData;
+import io.github.lambdatest.utils.LoggerUtil;
+import io.github.lambdatest.utils.SmartUIUtil;
+import io.github.lambdatest.constants.Constants;
+import io.github.lambdatest.models.ResponseData;
 import org.openqa.selenium.JavascriptExecutor;
 import com.google.gson.Gson;
 import java.util.Map;

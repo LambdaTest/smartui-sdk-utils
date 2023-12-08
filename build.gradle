@@ -2,12 +2,12 @@ plugins {
     id 'java'
     id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'signing'
 }
 
-group = 'com.github.lambdatest'
+group = 'io.github.lambdatest'
 version = '1.0.0'
 description = 'lambdatest-java-sdk'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenLocal()
@@ -21,29 +21,102 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'io.netty:netty-transport-native-epoll:4.1.101.Final'
     implementation 'io.netty:netty-transport-native-kqueue:4.1.101.Final'
-    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 shadowJar {
-    archiveClassifier.set('') 
-    archiveVersion.set(version) 
+    archiveClassifier.set('')
+    archiveVersion.set(version)
     manifest {
         attributes(
-            'Main-Class': 'com.github.lambdatest.MainClass' 
+            'Main-Class': 'io.github.lambdatest.MainClass'
         )
     }
 }
 
 java {
-    withSourcesJar() 
+    withSourcesJar()
     withJavadocJar()
+}
+
+// Ensure you have signing credentials for Maven Central
+signing {
+    sign publishing.publications
 }
 
 publishing {
     publications {
-        maven(MavenPublication) {
-            from(components.java)
+        mavenJava(MavenPublication) {
+            from components.java
+            // Additional configuration for your publication if needed
+        }
+    }
+
+    repositories {
+        maven {
+            name = "sonatype"
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+        }
+        maven {
+            name = "sonatypeSnapshots"
+            url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
         }
     }
 }
+
+afterEvaluate {
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                groupId = 'io.github.lambdatest'
+                artifactId = 'lambdatest-java-sdk'
+                version = '1.0.0'
+
+                pom {
+                    name.set('LambdaTest Java SDK')
+                    description.set('A Java SDK for LambdaTest services.')
+                    url.set('https://github.com/lambdatest/lambdatest-java-sdk')
+
+                    licenses {
+                        license {
+                            name.set('The Apache License, Version 2.0')
+                            url.set('http://www.apache.org/licenses/LICENSE-2.0.txt')
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id.set('shahnawazsk')
+                            name.set('Shahnawaz Sk')
+                            email.set('shahnawaz@lambdatest.com')
+                        }
+                    }
+
+                    scm {
+                        connection.set('scm:git:git://github.com/lambdatest/lambdatest-java-sdk.git')
+                        developerConnection.set('scm:git:ssh://github.com:lambdatest/lambdatest-java-sdk.git')
+                        url.set('https://github.com/lambdatest/lambdatest-java-sdk')
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
