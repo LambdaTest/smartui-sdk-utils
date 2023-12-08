@@ -1,4 +1,4 @@
-package com.github.lambdatest.models;
+package io.github.lambdatest.models;
 
 public class Snapshot {
     private Object dom;

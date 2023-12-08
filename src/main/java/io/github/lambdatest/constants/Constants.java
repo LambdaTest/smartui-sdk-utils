@@ -1,4 +1,4 @@
-package com.github.lambdatest.constants;
+package io.github.lambdatest.constants;
 
 public interface Constants {
 

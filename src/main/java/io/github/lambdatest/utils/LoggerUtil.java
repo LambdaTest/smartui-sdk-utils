@@ -1,11 +1,11 @@
-package com.github.lambdatest.utils;
+package io.github.lambdatest.utils;
 
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
-import com.github.lambdatest.constants.Constants;
+import io.github.lambdatest.constants.Constants;
 
 public class LoggerUtil {
     public static Logger createLogger(String logContext) {

@@ -1,11 +1,11 @@
-package com.github.lambdatest.utils;
+package io.github.lambdatest.utils;
 
 import java.util.logging.Logger;
 import org.json.JSONObject;
 import com.google.gson.Gson;
-import com.github.lambdatest.constants.Constants;
-import com.github.lambdatest.models.Snapshot;
-import com.github.lambdatest.models.SnapshotData;
+import io.github.lambdatest.constants.Constants;
+import io.github.lambdatest.models.Snapshot;
+import io.github.lambdatest.models.SnapshotData;
 
 public class SmartUIUtil {
     private final HttpClientUtil httpClient;

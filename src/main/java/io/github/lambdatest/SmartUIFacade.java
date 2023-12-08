@@ -1,9 +1,9 @@
-package com.github.lambdatest;
+package io.github.lambdatest;
 
 import java.util.logging.Logger;
 import org.openqa.selenium.WebDriver;
-import com.github.lambdatest.utils.LoggerUtil;
-import com.github.lambdatest.utils.SmartUIUtil;
+import io.github.lambdatest.utils.LoggerUtil;
+import io.github.lambdatest.utils.SmartUIUtil;
 
 public class SmartUIFacade {
     private final SmartUIUtil smartUIUtils;
