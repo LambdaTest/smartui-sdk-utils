@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'io.github.lambdatest'
-version = '1.0.0'
+version = '1.0.1'
 description = 'lambdatest-java-sdk'
 
 repositories {
@@ -19,8 +19,8 @@ dependencies {
     implementation 'org.json:json:20231013'
     implementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
     implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'io.netty:netty-transport-native-epoll:4.1.101.Final'
-    implementation 'io.netty:netty-transport-native-kqueue:4.1.101.Final'
+    implementation 'io.netty:netty-transport-native-epoll:4.1.104.Final'
+    implementation 'io.netty:netty-transport-native-kqueue:4.1.104.Final'
 }
 
 shadowJar {
@@ -77,7 +77,7 @@ afterEvaluate {
             mavenJava(MavenPublication) {
                 groupId = 'io.github.lambdatest'
                 artifactId = 'lambdatest-java-sdk'
-                version = '1.0.0'
+                version = '1.0.1'
 
                 pom {
                     name.set('LambdaTest Java SDK')
