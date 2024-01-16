@@ -65,7 +65,7 @@ public class SmartUISnapshot {
                     throw new IllegalStateException(Constants.Errors.MISSING_HTML_KEY);
                 }
     
-                smartUIUtils.postSnapshot(dom.get("html"), snapshotName, SmartUISnapshot.class.getName());
+                smartUIUtils.postSnapshot(dom.get("html"), snapshotName, "lambdatest-java-sdk");
                 log.info("Snapshot captured: " + snapshotName);
             } else {
                 throw new IllegalStateException(Constants.Errors.JAVA_SCRIPT_NOT_SUPPORTED);
