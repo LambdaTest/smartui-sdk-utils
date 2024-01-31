@@ -5,14 +5,21 @@ import io.github.lambdatest.utils.LoggerUtil;
 import io.github.lambdatest.utils.SmartUIUtil;
 import io.github.lambdatest.constants.Constants;
 import io.github.lambdatest.models.ResponseData;
+import io.github.lambdatest.models.SnapshotResponse;
 import org.openqa.selenium.JavascriptExecutor;
 import com.google.gson.Gson;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 import org.json.JSONObject;
+import java.util.List;
+import java.io.IOException;
+
 
 public class SmartUISnapshot {
-    public static void smartuiSnapshot(WebDriver driver, String snapshotName) throws Exception {
+
+    // Method with options parameter
+    public static void smartuiSnapshot(WebDriver driver, String snapshotName, Map<String, Object> options) throws Exception {
         if (driver == null) {
             throw new IllegalArgumentException(Constants.Errors.SELENIUM_DRIVER_NULL);
         }
@@ -52,10 +59,13 @@ public class SmartUISnapshot {
                 // Execute script with the fetched DOM string
                 ((JavascriptExecutor) driver).executeScript(domString);
 
-                // Execute another script and retrieve the DOM
-                String script = "return {'dom':SmartUIDOM.serialize()}";
+                // Convert the options map to JSON string
+                String jsonOptions = gson.toJson(options);
 
-                Map<String, Object> resultMap = (Map<String, Object>) jsExecutor.executeScript(script, new Object[] {});
+                // Use String.format to inject the JSON options into the script
+                String script = String.format("return {'dom':SmartUIDOM.serialize(%s)}", jsonOptions);
+
+                Map<String, Object> resultMap = (Map<String, Object>) jsExecutor.executeScript(script);
                 if (resultMap == null || !resultMap.containsKey("dom")) {
                     throw new IllegalStateException(Constants.Errors.NULL_RESULT_MAP);
                 }
@@ -64,8 +74,23 @@ public class SmartUISnapshot {
                 if (dom == null || !dom.containsKey("html")) {
                     throw new IllegalStateException(Constants.Errors.MISSING_HTML_KEY);
                 }
+
+                String url = driver.getCurrentUrl();
     
-                smartUIUtils.postSnapshot(dom.get("html"), snapshotName, "lambdatest-java-sdk");
+                String ResponseMap = smartUIUtils.postSnapshot(dom, options, url, snapshotName, "lambdatest-java-sdk");
+
+                // Parse the JSON response into a SnapshotResponse object using Gson
+                SnapshotResponse postSnapResponse = gson.fromJson(ResponseMap, SnapshotResponse.class);
+
+                List<String> warnings = postSnapResponse.getData().getWarnings();
+
+                // Check if there are any warnings
+                if (warnings != null && !warnings.isEmpty()) {
+                    for (String warning : warnings) {
+                        log.warning(warning);
+                    }
+                }
+
                 log.info("Snapshot captured: " + snapshotName);
             } else {
                 throw new IllegalStateException(Constants.Errors.JAVA_SCRIPT_NOT_SUPPORTED);
@@ -75,5 +100,10 @@ public class SmartUISnapshot {
             log.severe(e.getMessage());
             throw new Exception(e);
         }
+    }
+
+    // Overloaded method without options parameter
+    public static void smartuiSnapshot(WebDriver driver, String snapshotName) throws Exception {
+        smartuiSnapshot(driver, snapshotName, new HashMap<>()); // Pass an empty map for options
     }
 }

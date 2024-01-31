@@ -6,6 +6,9 @@ import com.google.gson.Gson;
 import io.github.lambdatest.constants.Constants;
 import io.github.lambdatest.models.Snapshot;
 import io.github.lambdatest.models.SnapshotData;
+import java.util.HashMap;
+import java.util.Map;
+import java.io.IOException;
 
 public class SmartUIUtil {
     private final HttpClientUtil httpClient;
@@ -35,12 +38,13 @@ public class SmartUIUtil {
         }
     }
 
-    public String postSnapshot(Object snapshotDOM, String snapshotName, String testType) throws Exception {
-
-       // Create Snapshot and SnapshotData objects
+    public String postSnapshot(Object snapshotDOM, Map<String, Object> options, String url, String snapshotName, String testType) throws Exception {
+        // Create Snapshot and SnapshotData objects
         Snapshot snapshot = new Snapshot();
         snapshot.setDom(snapshotDOM);
         snapshot.setName(snapshotName);
+        snapshot.setOptions(options);
+        snapshot.setURL(url);
 
         SnapshotData data = new SnapshotData();
         data.setSnapshot(snapshot);
@@ -49,7 +53,7 @@ public class SmartUIUtil {
         // Serialize to JSON using Gson
         Gson gson = new Gson();
         String jsonData = gson.toJson(data);
-        
+
         try {
             return httpClient.postSnapshot(jsonData);
         } catch (Exception e) {
@@ -59,6 +63,12 @@ public class SmartUIUtil {
     }
 
     public static String getSmartUIServerAddress() {
-        return System.getenv().getOrDefault(Constants.SMARTUI_SERVER_ADDRESS, Constants.LOCAL_SERVER_HOST);
+        String smartUiServerAddress = System.getenv(Constants.SMARTUI_SERVER_ADDRESS);
+        if (smartUiServerAddress != null && !smartUiServerAddress.isEmpty()) {
+            return smartUiServerAddress;
+        } else {
+            throw new RuntimeException("SmartUI server address not found");
+        }
     }
+    
 }
