@@ -57,8 +57,8 @@ public class SmartUIUtil {
         try {
             return httpClient.postSnapshot(jsonData);
         } catch (Exception e) {
+            log.severe(String.format(Constants.Errors.POST_SNAPSHOT_FAILED, testType), e);
             log.severe(e.getMessage());
-            throw new Exception(Constants.Errors.POST_SNAPSHOT_FAILED, e);
         }
     }
 
