@@ -98,7 +98,6 @@ public class SmartUISnapshot {
 
         } catch (Exception e) {
             log.severe(e.getMessage());
-            throw new Exception(e);
         }
     }
 

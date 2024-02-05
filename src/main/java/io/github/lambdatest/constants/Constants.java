@@ -45,7 +45,7 @@ public interface Constants {
     public static final String NULL_RESULT_MAP = "Result map is null or missing 'dom' key.";
     public static final String MISSING_HTML_KEY = "DOM map is null or missing 'html' key.";
     public static final String FETCH_DOM_FAILED = "fetch DOMSerializer failed";
-    public static final String POST_SNAPSHOT_FAILED = "Post snapshot failed";
+    public static final String POST_SNAPSHOT_FAILED = "Post snapshot failed: %s";
     public static final String INVALID_RESPONSE_DATA = "Invalid response from fetchDOMSerializer";
   }
 }
