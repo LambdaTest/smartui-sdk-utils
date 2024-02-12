@@ -47,5 +47,6 @@ public interface Constants {
     public static final String FETCH_DOM_FAILED = "fetch DOMSerializer failed";
     public static final String POST_SNAPSHOT_FAILED = "Post snapshot failed: %s";
     public static final String INVALID_RESPONSE_DATA = "Invalid response from fetchDOMSerializer";
+    public static final String SMARTUI_SNAPSHOT_FAILED = "SmartUI snapshot failed %s";
   }
 }
