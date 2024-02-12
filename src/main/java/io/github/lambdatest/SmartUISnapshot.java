@@ -97,6 +97,7 @@ public class SmartUISnapshot {
             }
 
         } catch (Exception e) {
+            log.severe(String.format(Constants.Errors.SMARTUI_SNAPSHOT_FAILED, snapshotName));
             log.severe(e.getMessage());
         }
     }
