@@ -26,7 +26,7 @@ public class SmartUISnapshot {
         if (snapshotName == null || snapshotName.isEmpty()) {
             throw new IllegalArgumentException(Constants.Errors.SNAPSHOT_NAME_NULL);
         }
-        Logger log = LoggerUtil.createLogger(SmartUISnapshot.class.getName());
+        Logger log = LoggerUtil.createLogger("lambdatest-java-sdk");
 
         Gson gson = new Gson();
 
@@ -98,7 +98,6 @@ public class SmartUISnapshot {
 
         } catch (Exception e) {
             log.severe(String.format(Constants.Errors.SMARTUI_SNAPSHOT_FAILED, snapshotName));
-            log.severe(e.getMessage());
         }
     }
 

@@ -16,7 +16,7 @@ public class SmartUIUtil {
 
     public SmartUIUtil() {
         this.httpClient = new HttpClientUtil();
-        this.log = LoggerUtil.createLogger(SmartUIUtil.class.getName());
+        this.log = LoggerUtil.createLogger("lambdatest-java-sdk");
     }
 
     public boolean isSmartUIRunning() {
@@ -57,9 +57,7 @@ public class SmartUIUtil {
         try {
             return httpClient.postSnapshot(jsonData);
         } catch (Exception e) {
-            log.severe(String.format(Constants.Errors.POST_SNAPSHOT_FAILED, testType));
-            log.severe(e.getMessage());
-            throw e;
+            return null;
         }
     }
 
