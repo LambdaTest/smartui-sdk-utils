@@ -13,7 +13,7 @@ public class SmartUIFacade {
 
     public SmartUIFacade() {
         this.smartUIUtils = new SmartUIUtil();
-        this.log = LoggerUtil.createLogger(SmartUIFacade.class.getName());
+        this.log = LoggerUtil.createLogger("lambdatest-java-sdk");
     }
 
     public boolean isSmartUIRunning() {

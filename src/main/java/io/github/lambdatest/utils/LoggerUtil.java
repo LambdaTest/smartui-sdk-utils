@@ -10,26 +10,32 @@ import io.github.lambdatest.constants.Constants;
 public class LoggerUtil {
     public static Logger createLogger(String logContext) {
         Logger logger = Logger.getLogger(logContext);
-        logger.setLevel(getLogLevel());
-        logger.setUseParentHandlers(false);
 
-        ConsoleHandler handler = new ConsoleHandler();
-        handler.setFormatter(new Formatter() {
-            @Override
-            public String format(LogRecord record) {
-                String message = formatMessage(record);
-                if (record.getLevel().equals(Level.FINE)) {
-                    message = Constants.LoggerColors.ANSI_BLUE + message + Constants.LoggerColors.ANSI_RESET;
-                } else if (record.getLevel().equals(Level.WARNING)) {
-                    message = Constants.LoggerColors.ANSI_YELLOW + message + Constants.LoggerColors.ANSI_RESET;
-                } else if (record.getLevel().equals(Level.SEVERE)) {
-                    message = Constants.LoggerColors.ANSI_RED + message + Constants.LoggerColors.ANSI_RESET;
+        // Check if the logger already has the custom handler configured
+        if (logger.getHandlers().length == 0) {
+            logger.setLevel(getLogLevel());
+            logger.setUseParentHandlers(false);
+
+            ConsoleHandler handler = new ConsoleHandler();
+            handler.setFormatter(new Formatter() {
+                @Override
+                public String format(LogRecord record) {
+                    String message = formatMessage(record);
+                    if (record.getLevel().equals(Level.FINE)) {
+                        message = Constants.LoggerColors.ANSI_BLUE + message + Constants.LoggerColors.ANSI_RESET;
+                    } else if (record.getLevel().equals(Level.WARNING)) {
+                        message = Constants.LoggerColors.ANSI_YELLOW + message + Constants.LoggerColors.ANSI_RESET;
+                    } else if (record.getLevel().equals(Level.SEVERE)) {
+                        message = Constants.LoggerColors.ANSI_RED + message + Constants.LoggerColors.ANSI_RESET;
+                    }
+                    return String.format("[%s] %s%n", logContext, message);
                 }
-                return String.format("[%s] %s%n", logContext, message);
-            }
-        });
-        logger.addHandler(handler);
-        
+            });
+            logger.addHandler(handler);
+        } else {
+            // The logger already has handlers, assuming it's already configured
+        }
+
         return logger;
     }
 
