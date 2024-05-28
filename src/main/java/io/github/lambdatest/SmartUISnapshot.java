@@ -11,10 +11,7 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-import org.json.JSONObject;
 import java.util.List;
-import java.io.IOException;
-
 
 public class SmartUISnapshot {
 
