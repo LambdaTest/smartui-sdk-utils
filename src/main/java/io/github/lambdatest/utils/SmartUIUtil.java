@@ -1,18 +1,15 @@
 package io.github.lambdatest.utils;
 
 import java.util.logging.Logger;
-import org.json.JSONObject;
 import com.google.gson.Gson;
 import io.github.lambdatest.constants.Constants;
 import io.github.lambdatest.models.Snapshot;
 import io.github.lambdatest.models.SnapshotData;
-import java.util.HashMap;
 import java.util.Map;
-import java.io.IOException;
 
 public class SmartUIUtil {
     private final HttpClientUtil httpClient;
-    private Logger log;
+    private final Logger log;
 
     public SmartUIUtil() {
         this.httpClient = new HttpClientUtil();

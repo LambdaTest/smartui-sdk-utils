@@ -1,6 +1,5 @@
 package io.github.lambdatest.models;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Snapshot {

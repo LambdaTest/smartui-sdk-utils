@@ -14,7 +14,6 @@ import io.github.lambdatest.constants.Constants;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
-import org.json.*;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -23,7 +22,7 @@ import com.google.gson.JsonElement;
 
 public class HttpClientUtil {
     private final CloseableHttpClient httpClient;
-    private Logger log;
+    private final Logger log;
 
     public HttpClientUtil() {
         this.httpClient = HttpClients.createDefault();
